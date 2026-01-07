@@ -284,6 +284,17 @@ def py2dep(target, **kw) -> depgraph.DepGraph:
     except ImportError:
         log.info("mf_depgraph:\n%s", json.dumps(dict(mf_depgraph), indent=4))
 
+    # Optional filter: remove parent packages when submodules exist
+    if kw.get('skip_parent_modules'):
+        all_names = set(mf_depgraph.keys()) | set(n for v in mf_depgraph.values() for n in v.keys())
+        parents = {n for n in all_names if any(m.startswith(n + '.') for m in all_names)}
+        if parents:
+            mf_depgraph = {
+                k: {vk: vv for vk, vv in v.items() if vk not in parents}
+                for k, v in mf_depgraph.items() if k not in parents
+            }
+            log.info("Filtered parent packages (skip_parent_modules): %s", json.dumps(sorted(parents)))
+
     return depgraph.DepGraph(mf_depgraph, mf._types, target, **kw)
 
 

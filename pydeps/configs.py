@@ -1,4 +1,3 @@
-    
 from io import StringIO
 import json
 import warnings
@@ -221,6 +220,9 @@ class Config(object):
     #: draw arrows to (instead of from) imported modules
     reverse = False
 
+    #: skip parent packages when submodules exist
+    skip_parent_modules = False
+
     #: set the direction of the graph, legal values are TB (default, imported
     #: modules above importing modules), BT (opposite direction of TB),
     #: LR (left-to-right), and RL (right-to-left)
@@ -321,6 +323,8 @@ class Config(object):
             self.externals = boolval(value)
         if field == 'reverse':
             self.reverse = boolval(value)
+        if field == 'skip_parent_modules':
+            self.skip_parent_modules = boolval(value)
         if field == 'rankdir':
             self.rankdir = str(value)
         if field == 'cluster':

@@ -168,6 +168,7 @@ def parse_args(argv=()):
     args.add('--only', default=[], nargs="+", metavar="MODULE_PATH", help="only include modules that start with MODULE_PATH")
     args.add('--externals', action='store_true', help='create list of direct external dependencies')
     args.add('--reverse', action='store_true', help="draw arrows to (instead of from) imported modules")
+    args.add('--skip-parent-modules', action='store_true', help="skip parent packages when submodules exist")
     args.add('--rankdir', default='TB', type=str, choices=['TB', 'BT', 'LR', 'RL'], help="set the direction of the graph, legal values are TB (default, imported modules above importing modules), "
                                                                                          "BT (opposite direction of TB), LR (left-to-right), and RL (right-to-left)")
     args.add('--cluster', action='store_true', help="draw external dependencies as separate clusters")
